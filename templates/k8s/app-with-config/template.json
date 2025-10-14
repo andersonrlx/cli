@@ -1,0 +1,55 @@
+{
+  "defaults": {
+    "namespace": "default",
+    "port": 8080,
+    "image": "nginx:alpine"
+  },
+  "questions": [
+    {
+      "type": "input",
+      "name": "name",
+      "message": "Nome do app:"
+    },
+    {
+      "type": "input",
+      "name": "namespace",
+      "message": "Namespace:",
+      "default": "default"
+    },
+    {
+      "type": "input",
+      "name": "image",
+      "message": "Imagem:",
+      "default": "nginx:alpine"
+    },
+    {
+      "type": "number",
+      "name": "port",
+      "message": "Porta:",
+      "default": 8080
+    },
+    {
+      "type": "input",
+      "name": "configKey",
+      "message": "Chave de conf (CONFIG_KEY):",
+      "default": "APP_MODE"
+    },
+    {
+      "type": "input",
+      "name": "configVal",
+      "message": "Valor da conf:",
+      "default": "production"
+    },
+    {
+      "type": "input",
+      "name": "secretKey",
+      "message": "Chave secreta (SECRET_KEY):",
+      "default": "API_TOKEN"
+    },
+    {
+      "type": "password",
+      "name": "secretVal",
+      "message": "Valor secreto:"
+    }
+  ]
+}

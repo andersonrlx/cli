@@ -1,0 +1,32 @@
+{
+  "defaults": {
+    "namespace": "default",
+    "port": 8080,
+    "image": "nginx:latest"
+  },
+  "questions": [
+    {
+      "type": "input",
+      "name": "name",
+      "message": "Nome do app:"
+    },
+    {
+      "type": "input",
+      "name": "namespace",
+      "message": "Namespace:",
+      "default": "default"
+    },
+    {
+      "type": "input",
+      "name": "image",
+      "message": "Imagem:",
+      "default": "nginx:latest"
+    },
+    {
+      "type": "number",
+      "name": "port",
+      "message": "Porta:",
+      "default": 8080
+    }
+  ]
+}

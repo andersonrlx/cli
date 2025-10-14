@@ -1,0 +1,27 @@
+{
+  "defaults": {
+    "region": "sa-east-1",
+    "desired_size": 2,
+    "max_size": 3,
+    "min_size": 1
+  },
+  "questions": [
+    {
+      "type": "input",
+      "name": "name",
+      "message": "Nome do cluster:"
+    },
+    {
+      "type": "input",
+      "name": "region",
+      "message": "Região AWS:",
+      "default": "sa-east-1"
+    },
+    {
+      "type": "number",
+      "name": "desired_size",
+      "message": "Desired nodes:",
+      "default": 2
+    }
+  ]
+}

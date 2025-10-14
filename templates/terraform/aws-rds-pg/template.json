@@ -1,0 +1,25 @@
+{
+  "defaults": {
+    "region": "sa-east-1",
+    "engine_version": "15.5",
+    "instance_class": "db.t4g.micro"
+  },
+  "questions": [
+    {
+      "type": "input",
+      "name": "name",
+      "message": "Prefixo do DB:"
+    },
+    {
+      "type": "input",
+      "name": "region",
+      "message": "Região AWS:",
+      "default": "sa-east-1"
+    },
+    {
+      "type": "password",
+      "name": "db_password",
+      "message": "Senha do Postgres:"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "defaults": {
+    "region": "sa-east-1",
+    "cpu": "256",
+    "memory": "512",
+    "desired_count": 2
+  },
+  "questions": [
+    {
+      "type": "input",
+      "name": "name",
+      "message": "Nome do serviço (ecs):"
+    },
+    {
+      "type": "input",
+      "name": "region",
+      "message": "Região AWS:",
+      "default": "sa-east-1"
+    },
+    {
+      "type": "input",
+      "name": "image",
+      "message": "Imagem (ECR/DockerHub):",
+      "default": "nginx:alpine"
+    },
+    {
+      "type": "number",
+      "name": "container_port",
+      "message": "Porta container:",
+      "default": 80
+    },
+    {
+      "type": "number",
+      "name": "desired_count",
+      "message": "Desired tasks:",
+      "default": 2
+    }
+  ]
+}

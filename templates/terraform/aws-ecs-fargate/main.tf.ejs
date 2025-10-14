@@ -1,0 +1,126 @@
+terraform {
+  required_version = ">= 1.7.0"
+  required_providers {
+    aws = { source = "hashicorp/aws", version = "~> 5.0" }
+  }
+}
+provider "aws" { region = var.region }
+
+module "vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "~> 5.0"
+  name = "${var.name}-vpc"
+  cidr = "10.0.0.0/16"
+  azs  = ["${var.region}a", "${var.region}b"]
+  private_subnets = ["10.0.1.0/24", "10.0.2.0/24"]
+  public_subnets  = ["10.0.101.0/24", "10.0.102.0/24"]
+  enable_nat_gateway = true
+  single_nat_gateway = true
+}
+
+module "ecs" {
+  source  = "terraform-aws-modules/ecs/aws"
+  version = "~> 5.11"
+  cluster_name = "${var.name}-cluster"
+  create_cluster = true
+}
+
+module "alb" {
+  source  = "terraform-aws-modules/alb/aws"
+  version = "~> 9.9"
+  name    = "${var.name}-alb"
+  load_balancer_type = "application"
+  vpc_id  = module.vpc.vpc_id
+  subnets = module.vpc.public_subnets
+
+  target_groups = [
+    {
+      name_prefix      = "tg-"
+      backend_protocol = "HTTP"
+      backend_port     = var.container_port
+      target_type      = "ip"
+      health_check = {
+        enabled = true
+        healthy_threshold   = 2
+        unhealthy_threshold = 2
+        interval            = 15
+        matcher             = "200-399"
+        path                = "/"
+      }
+    }
+  ]
+
+  listeners = [
+    {
+      port     = 80
+      protocol = "HTTP"
+      default_action = {
+        type = "forward"
+        target_group_index = 0
+      }
+    }
+  ]
+}
+
+module "service" {
+  source  = "terraform-aws-modules/ecs/aws//modules/service"
+  version = "~> 5.11"
+
+  name        = var.name
+  cluster_arn = module.ecs.cluster_arn
+  launch_type = "FARGATE"
+
+  cpu    = 256
+  memory = 512
+  desired_count = var.desired_count
+
+  network_configuration = {
+    subnets         = module.vpc.private_subnets
+    assign_public_ip = false
+    security_groups = [aws_security_group.ecs_tasks.id]
+  }
+
+  load_balancer = {
+    service = [
+      {
+        target_group_arn = module.alb.target_group_arns[0]
+        container_name   = var.name
+        container_port   = var.container_port
+      }
+    ]
+  }
+
+  container_definitions = {
+    (var.name) = {
+      image = var.image
+      port_mappings = [{
+        containerPort = var.container_port
+        hostPort      = var.container_port
+        protocol      = "tcp"
+      }]
+      essential = true
+    }
+  }
+}
+
+resource "aws_security_group" "ecs_tasks" {
+  name        = "${var.name}-ecs-tasks"
+  description = "Allow inbound from ALB"
+  vpc_id      = module.vpc.vpc_id
+
+  ingress {
+    from_port   = var.container_port
+    to_port     = var.container_port
+    protocol    = "tcp"
+    security_groups = [module.alb.security_group_id]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+output "alb_dns_name" { value = module.alb.lb_dns_name }

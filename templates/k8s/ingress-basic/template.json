@@ -1,0 +1,37 @@
+{
+  "defaults": {
+    "namespace": "default",
+    "ingressClass": "nginx"
+  },
+  "questions": [
+    {
+      "type": "input",
+      "name": "name",
+      "message": "Nome do host (sem http):"
+    },
+    {
+      "type": "input",
+      "name": "serviceName",
+      "message": "Service alvo:",
+      "default": "app-service"
+    },
+    {
+      "type": "number",
+      "name": "servicePort",
+      "message": "Porta alvo:",
+      "default": 80
+    },
+    {
+      "type": "input",
+      "name": "namespace",
+      "message": "Namespace:",
+      "default": "default"
+    },
+    {
+      "type": "input",
+      "name": "ingressClass",
+      "message": "IngressClass:",
+      "default": "nginx"
+    }
+  ]
+}

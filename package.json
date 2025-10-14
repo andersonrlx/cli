@@ -1,0 +1,21 @@
+{
+  "name": "infra-cli",
+  "version": "1.1.0",
+  "description": "CLI para gerar boilerplates de Kubernetes YAML e Terraform",
+  "bin": {
+    "infra": "./bin/infra"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "node ./src/index.js"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "ejs": "^3.1.10",
+    "fs-extra": "^11.2.0",
+    "inquirer": "^12.0.1",
+    "minimatch": "^9.0.5",
+    "simple-git": "^3.27.0",
+    "tar": "^7.4.3"
+  }
+}

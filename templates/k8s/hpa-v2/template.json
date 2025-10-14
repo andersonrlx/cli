@@ -1,0 +1,39 @@
+{
+  "defaults": {
+    "namespace": "default",
+    "minReplicas": 2,
+    "maxReplicas": 10,
+    "cpuTarget": 70
+  },
+  "questions": [
+    {
+      "type": "input",
+      "name": "name",
+      "message": "Deployment alvo:"
+    },
+    {
+      "type": "number",
+      "name": "minReplicas",
+      "message": "Mínimo:",
+      "default": 2
+    },
+    {
+      "type": "number",
+      "name": "maxReplicas",
+      "message": "Máximo:",
+      "default": 10
+    },
+    {
+      "type": "number",
+      "name": "cpuTarget",
+      "message": "CPU target %:",
+      "default": 70
+    },
+    {
+      "type": "input",
+      "name": "namespace",
+      "message": "Namespace:",
+      "default": "default"
+    }
+  ]
+}
