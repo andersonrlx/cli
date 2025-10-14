@@ -1,0 +1,40 @@
+# Dependências
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# Link global / symlinks criados por `npm link`
+lib/
+infra-cli*/             # caso gere .tgz com npm pack
+*.tgz
+*.tgz.old
+
+# Configurações locais
+.env
+.env.local
+.DS_Store
+
+# Cache do npm
+.npm/
+.npmrc
+
+# Diretórios da CLI
+.infra-cli/
+.tpl_repos/
+out/
+dist/
+build/
+
+# IDEs / sistemas
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs e temporários
+*.log
+*.tmp
+*.bak
+*.cache/
