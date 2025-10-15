@@ -26,6 +26,9 @@ infra new --type k8s --template hpa-v2 --outdir ./scaffold --vars '{"name":"api-
 # App com Config/Secret
 infra new --type k8s --template app-with-config --outdir ./scaffold --vars '{"name":"api-pedidos","namespace":"prod","configVal":"production","secretVal":"S3cr3t!"}'
 
+# App via Helmchart
+infra new --type helm --template meu-chart --outdir ./scaffold --vars '{"name":"app-x"}'
+
 # Terraform ECS Fargate
 infra new --type terraform --template aws-ecs-fargate --outdir ./scaffold --vars '{"name":"orders","image":"public.ecr.aws/nginx/nginx:latest","container_port":80,"region":"sa-east-1"}'
 

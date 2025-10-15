@@ -1,0 +1,10 @@
+{
+  "defaults": { "replicaCount": 2, "image": "ghcr.io/org/app:latest", "servicePort": 8080 },
+  "questions": [
+    { "type": "input", "name": "image", "message": "Imagem:", "default": "ghcr.io/org/app:latest" },
+    { "type": "number", "name": "replicaCount", "message": "Réplicas:", "default": 2 },
+    { "type": "number", "name": "servicePort", "message": "Porta do service:", "default": 8080 },
+    { "type": "confirm", "name": "ingressEnabled", "message": "Habilitar Ingress?", "default": true },
+    { "type": "input", "name": "host", "message": "Host (se Ingress):", "default": "app.example.com" }
+  ]
+}
